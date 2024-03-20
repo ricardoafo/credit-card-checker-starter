@@ -25,43 +25,31 @@ const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, inval
 
 // Add your functions below:
 function validateCred(cardArray) {
-  let accumulator = 0;
-  // Iterate over the array
-  let position = cardArray.length;
-  for (let i = cardArray.length - 1; i >= 0; i--) {
-    // Check if the next number in the array is a check digit.
-    if (position % 2 === 0) {
-        // If number is a check digit, is add to the accumulator
+    let accumulator = 0;
+    // Iterate over the array in the check digit positions
+    for (let i = cardArray.length - 1; i >= 0; i -= 2) {
+        // The check digit is add to the accumulator
         accumulator += cardArray[i];
-        position--;
-        // If not a check digit, then digit is multiplied by 2
-    } else {
+    }
+    
+    // Iterate over the array in the other digits positions
+    for (let i = cardArray.length - 2; i >= 0; i -= 2) {
+        // The other digits are multiplied by 2
         let doubled = cardArray[i] * 2;
-        // If the digit after being multiplied is greater than 9, then subtract 9
-        // And then add to the accumulator
+        // If the result is greater than 9 then subtract 9
         if (doubled > 9) {
             doubled -= 9;
-        }
+        };
+        // Result is added to the accumulator
         accumulator += doubled;
-        position--;
-        }
     }
-
-  // Divide the accumulator with % 10, if equal to 0 return true
-  console.log(accumulator)
-  return accumulator % 10 === 0;
+    // Divide the accumulator with % 10, if equal to 0 return true
+    return accumulator % 10 === 0;
 }
 
-console.log(validateCred(valid1));
-console.log(validateCred(valid2));
-console.log(validateCred(valid3));
-console.log(validateCred(valid4));
-console.log(validateCred(valid5));
-console.log(validateCred(invalid1));
-console.log(validateCred(invalid2));
-console.log(validateCred(invalid3));
-console.log(validateCred(invalid4));
-console.log(validateCred(invalid5));
+function findInvalidCards(cardArray) {
+    
+}
 
 
 
