@@ -31,7 +31,6 @@ function validateCred(cardArray) {
         // The check digit is add to the accumulator
         accumulator += cardArray[i];
     }
-    
     // Iterate over the array in the other digits positions
     for (let i = cardArray.length - 2; i >= 0; i -= 2) {
         // The other digits are multiplied by 2
@@ -42,18 +41,49 @@ function validateCred(cardArray) {
         };
         // Result is added to the accumulator
         accumulator += doubled;
-    }
+    };
     // Divide the accumulator with % 10, if equal to 0 return true
     return accumulator % 10 === 0;
-}
+};
 
 function findInvalidCards(cardArray) {
-    
-}
+    return cardArray.filter(card => validateCred(card) ? false : card); 
+    };
 
+let invalidCardsArray = findInvalidCards(batch);
 
+function idInvalidCardCompanies(invalidCardsArray) {
+    let brandsArray = [];
 
+    invalidCardsArray.forEach(card => {
+        switch (card[0]) {
+            case 3:
+                if (!brandsArray.includes("Amex (American Express)")) {
+                    brandsArray.push("Amex (American Express)");
+                }
+                break;
+            case 4:
+                if (!brandsArray.includes("Visa")) {
+                    brandsArray.push("Visa");
+                }
+                break;
+            case 5:
+                if (!brandsArray.includes("Mastercard")) {
+                    brandsArray.push("Mastercard");
+                }
+                break;
+            case 6:
+                if (!brandsArray.includes("Discover")) {
+                    brandsArray.push("Discover");
+                }
+                break;
+            default:
+                brandsArray.push('Company not found');
+                break;
+        }
+    });
 
+    return brandsArray;
+};
 
-
-
+console.log(idInvalidCardCompanies(invalidCardsArray));
